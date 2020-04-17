@@ -1,43 +1,102 @@
-.App {
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Gotu|Playfair+Display&display=swap");
+
+
+html{
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+
+:focus{
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: rgba(0,123,255,.25);
+  box-shadow: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+body {
+  font-family: "Gotu", sans-serif;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: darkviolet;
+}
+
+.page-title::after {
+  content: " >";
+}
+
+.board .card-body {
+  height: 200px;
+}
+
+.board {
+  transition: 0.5s;
+}
+
+.board:hover {
+  transform: scale(1.08);
+  transition: 0.5s;
+}
+
+.deleteBoard{
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  padding: 20px;
+}
+
+.deleteBoardDiv{
+  cursor: pointer;
+  top: 40px;
+  right: 30px;
+  padding: 10px 20px;
+}
+
+.notAllowed .boardName::after{
+  display: block;
   text-align: center;
+  content: '(Read Only)';
+  color: green;
+  font-weight: bold;
 }
 
-.App-logo {
-  width: 120px;
-  pointer-events: none;
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-zoom infinite 2s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-@keyframes App-logo-zoom {
-  0% {
-    transform: scale(1);
-  }
-  25% {
-    transform: scale(2);
-  }
-  50% {
-    transform: scale(3);
-  }
-  75%{
-    transform: scale(2);
-  }
-  100%{
-    transform: scale(1);
-  }
+footer p {
+  text-align: center;
+  text-shadow: 1px 1px 2px darkslategray;
 }
