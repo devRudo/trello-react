@@ -21,11 +21,13 @@ class Board extends React.Component {
     fetchAllInsideBoard = async () => {
         await axios.get(`https://api.trello.com/1/boards/${this.state.boardId}?lists=open&key=26ca8095d6e66ddb4574d27071dc67f5&token=13dda1399e9449a68eeeb078e7cd939f289c6e98096c80e76e2a154c0ac4f90b`)
             .then(response => {
-                this.setState({
-                    board: response.data,
-                    lists: response.data.lists,
-                    loading: false
-                });
+                setTimeout(() => {
+                    this.setState({
+                        board: response.data,
+                        lists: response.data.lists,
+                        loading: false
+                    });
+                }, 2000);
             })
     }
 
@@ -74,8 +76,11 @@ class Board extends React.Component {
         }
         else {
             return (
-                <div className="container-fluid">
-                    <h1>Loading....</h1>
+                <div className="container-fluid loading">
+                    <div className="circle">
+                        <div className="inner-circle"></div>
+                        <div className="rotating-circle"></div>
+                    </div>
                 </div>
             )
         }

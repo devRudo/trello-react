@@ -44,6 +44,42 @@ body {
   box-shadow: none;
 }
 
+.loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.circle{
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-image: linear-gradient(to right, #62b8e8, #b83140);
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 2px 3px 5px gray;
+  animation: rotate 1s infinite linear;
+}
+
+.inner-circle {
+  width: 80px;
+  height: 80px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+@keyframes rotate {
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+
 .avatar {
   width: 80px;
   height: 80px;

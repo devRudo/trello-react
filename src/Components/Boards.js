@@ -8,16 +8,20 @@ class Boards extends React.Component {
         super(props);
         this.state = {
             url: 'https://api.trello.com/1/members/me/boards/?key=26ca8095d6e66ddb4574d27071dc67f5&token=13dda1399e9449a68eeeb078e7cd939f289c6e98096c80e76e2a154c0ac4f90b',
-            boards: []
+            boards: [],
+            loading: true
         }
     }
 
     componentDidMount() {
         this.fetchBoards(this.state.url)
             .then(response => {
-                this.setState({
-                    boards: response.data
-                })
+                setTimeout(() => {
+                    this.setState({
+                        boards: response.data,
+                        loading: false
+                    })
+                }, 2000);
             });
     }
 
@@ -32,7 +36,7 @@ class Boards extends React.Component {
                     let boards = this.state.boards;
                     let updatedBoards = boards.concat(response.data);
                     this.setState({
-                        boards: updatedBoards
+                        boards: updatedBoards,
                     })
                 })
                 .catch((error) => {
@@ -60,22 +64,34 @@ class Boards extends React.Component {
     }
 
     render() {
-        return (
-            <div className="container-fluid">
-                <div className="row p-4">
-                    <h3 className="col-md-12 page-title">Personal Boards</h3>
+        if (!this.state.loading) {
+            return (
+                <div className="container-fluid">
+                    <div className="row p-4">
+                        <h3 className="col-md-12 page-title">Personal Boards</h3>
+                    </div>
+                    <div className="row p-4 d-none" id="status">
+                        <div className="col-md-12 alert"></div>
+                    </div>
+                    <div className="row p-4">
+                        {this.state.boards.map(board =>
+                            <SingleBoard key={board.id} id={board.id} boardName={board.name} deleteBoard={(e) => this.deleteBoard(e, board.id)} />
+                        )}
+                        <AddBoard addBoard={this.addBoard} />
+                    </div>
                 </div>
-                <div className="row p-4 d-none" id="status">
-                    <div className="col-md-12 alert"></div>
+            )
+        }
+        else {
+            return (
+                <div className="container-fluid loading">
+                    <div className="circle">
+                        <div className="inner-circle"></div>
+                        <div className="rotating-circle"></div>
+                    </div>
                 </div>
-                <div className="row p-4">
-                    {this.state.boards.map(board =>
-                        <SingleBoard key={board.id} id={board.id} boardName={board.name} deleteBoard={(e) => this.deleteBoard(e, board.id)} />
-                    )}
-                    <AddBoard addBoard={this.addBoard} />
-                </div>
-            </div>
-        )
+            )
+        }
     }
 }
 
