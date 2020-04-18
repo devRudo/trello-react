@@ -57,9 +57,6 @@ class Boards extends React.Component {
                     console.log(error);
                 });
         }
-        else {
-            
-        }
     }
 
     render() {

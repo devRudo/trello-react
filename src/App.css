@@ -90,6 +90,91 @@ body {
   font-weight: bold;
 }
 
+
+#addlist{
+  background-color: rgba(255, 255 , 255, 0.1);
+  cursor: pointer;
+  color: gray;
+}
+
+#addlist:hover{
+  background-color: rgba(255, 255 , 255, 0.2);
+  color: darkslategray;
+}
+
+.listOption {
+  cursor: pointer;
+  top: 15px;
+  right: 10px;
+}
+
+.deleteList {
+  cursor: pointer;
+  top: 45px;
+  right: -115px;
+  padding: 10px 20px;
+  z-index: 3;
+}
+
+.addcard{
+  cursor: pointer;
+  color: gray;
+}
+
+.addcard:hover {
+  color: darkslategray;
+}
+
+.editCard {
+  cursor: pointer;
+  top: 0;
+  right: 0;
+}
+
+.cardOptions{
+  top: 10px;
+  right: -120px;
+  z-index: 2;
+}
+
+.cardOptions .list-group-item {
+  background: rgba(0,0,0,0.6);
+  color: white;
+}
+
+.deleteCard {
+  cursor: pointer;
+}
+
+
+.modaloptions {
+  background: rgba(238,238,238);
+  cursor: pointer;
+}
+
+.modaloptions:hover {
+  background: rgba(0,0,0,0.2);
+}
+
+input[type=checkbox]:checked + div > span{
+  text-decoration: line-through;
+}
+
+.addChecklistForm{
+  top: 150px;
+  left: 15px;
+  right: -100px;
+}
+
+.deleteCheckItem{
+  top: 30px;
+  right: 35px;
+}
+
+.checklistName{
+  cursor: pointer;
+}
+
 footer {
   position: fixed;
   bottom: 0;
