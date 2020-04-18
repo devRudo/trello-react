@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
     render() {
@@ -9,16 +10,16 @@ class Home extends React.Component {
                         <h3 className="text-center p-4 text-white"><img src="user.png" className="avatar m-4" alt="" /> Vijay Kumar Mishra</h3>
                         <ul className="nav nav-tabs">
                             <li className="nav-item">
-                                <a className="nav-link active" href="/settings">Personal Info</a>
+                                <Link className="nav-link active" to="/settings">Personal Info</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link text-white" href="/boards">Activity</a>
+                                <Link className="nav-link text-white" to="/boards">Activity</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link text-white" href="/boards">Cards</a>
+                                <Link className="nav-link text-white" to="/boards">Cards</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link text-white" href="/boards">Settings</a>
+                                <Link className="nav-link text-white" to="/boards">Settings</Link>
                             </li>
                         </ul>
                     </div>
