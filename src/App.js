@@ -4,11 +4,11 @@ import {
   BrowserRouter,
   Route
 } from 'react-router-dom';
-import Header from './Components/Header';
-import Footer from './Components/Footer';
+import Header from './Components/Layouts/Header';
+import Footer from './Components/Layouts/Footer';
 import Home from './Components/Home';
-import Boards from './Components/Boards';
-import Board from './Components/Board';
+import Boards from './Components/Boards/Boards';
+import Board from './Components/Lists/Board';
 
 class App extends React.Component {
   render() {

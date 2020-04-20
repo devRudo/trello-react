@@ -21,7 +21,7 @@ class Boards extends React.Component {
                         boards: response.data,
                         loading: false
                     })
-                }, 2000);
+                }, 1000);
             });
     }
 

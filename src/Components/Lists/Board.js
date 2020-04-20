@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import List from './List';
+import List from './List/List';
 import AddList from './AddList';
 
 class Board extends React.Component {
@@ -27,7 +27,7 @@ class Board extends React.Component {
                         lists: response.data.lists,
                         loading: false
                     });
-                }, 2000);
+                }, 1000);
             })
     }
 
@@ -59,13 +59,54 @@ class Board extends React.Component {
         }
     }
 
+    makeBoardNameEditable = (e) => {
+        e.target.contentEditable = true;
+    }
+
+    editBoardName = (e) => {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            let updatedName = e.target.innerText;
+            let notAllowedToDelete = ['5e65bd8ff425e525aca64631', '5e845a3b779e06357216fd3d', '5e60b76c5b928d283db14923', '5e8876da77268e2656264886', '5e888bce45f5e186182c5c8e'];
+            if (!notAllowedToDelete.includes(this.state.boardId)) {
+                axios.put(`https://api.trello.com/1/boards/${this.state.boardId}?name=${updatedName}&key=26ca8095d6e66ddb4574d27071dc67f5&token=13dda1399e9449a68eeeb078e7cd939f289c6e98096c80e76e2a154c0ac4f90b`)
+                    .then(response => {
+                        let { board } = this.state;
+                        board.name = updatedName;
+                        this.setState({
+                            board,
+                            loading: true
+                        });
+                        setTimeout(() => {
+                            this.setState({
+                                loading: false
+                            })
+                        }, 500);
+                    })
+            }
+            else {
+                this.setState({
+                    loading: true
+                });
+                setTimeout(() => {
+                    this.setState({
+                        loading: false
+                    })
+                }, 500);
+                e.target.setAttribute('contentEditable', false);
+            }
+
+        }
+    }
+
+
     render() {
         if (!this.state.loading) {
             return (
                 <div className="container-fluid">
                     <div className="row p-4">
                         <div className="col-md-12">
-                            <h3 className="d-inline page-title" id="boardName">{this.state.board ? this.state.board.name : null}</h3>
+                            <h3 className="d-inline page-title" id="boardName" onFocus={() => document.execCommand('selectAll', false, null)} onClick={(e) => this.makeBoardNameEditable(e)} onKeyDown={(e) => this.editBoardName(e)}>{this.state.board ? this.state.board.name : null}</h3>
                         </div>
                     </div>
                     <div className="row p-4">{this.state.lists.map((list) => <List key={list.id} id={list.id} deleteList={this.deleteList} boardId={this.state.boardId} />)}
