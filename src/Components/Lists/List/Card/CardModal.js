@@ -45,7 +45,7 @@ class CardModal extends Component {
 
     addCheckList = (checkListName) => {
         let notAllowedToDelete = ['5e65bd8ff425e525aca64631', '5e845a3b779e06357216fd3d', '5e60b76c5b928d283db14923', '5e8876da77268e2656264886'];
-        if (!notAllowedToDelete.includes(this.props.card.idBoard)) {
+        if (!notAllowedToDelete.includes(this.state.card.idBoard)) {
             axios.post(`https://api.trello.com/1/checklists?name=${checkListName}&idCard=${this.props.cardId}&pos=bottom&key=26ca8095d6e66ddb4574d27071dc67f5&token=13dda1399e9449a68eeeb078e7cd939f289c6e98096c80e76e2a154c0ac4f90b`)
                 .then(response => {
                     let { checklists } = this.state;
@@ -60,6 +60,40 @@ class CardModal extends Component {
                 showAddChecklist: !this.state.showAddChecklist
             });
         }
+    }
+
+    deleteChecklist = (checklistId) => {
+        let { checklists } = this.state;
+        let notAllowedToDelete = ['5e65bd8ff425e525aca64631', '5e845a3b779e06357216fd3d', '5e60b76c5b928d283db14923', '5e8876da77268e2656264886'];
+        if (!notAllowedToDelete.includes(checklists[0].idBoard)) {
+            axios.delete(`https://api.trello.com/1/checklists/${checklistId}?key=26ca8095d6e66ddb4574d27071dc67f5&token=13dda1399e9449a68eeeb078e7cd939f289c6e98096c80e76e2a154c0ac4f90b`)
+                .then(response => {
+                    let updatedChecklists = checklists.filter(checklist => checklist.id !== checklistId);
+                    this.setState({
+                        checklists: updatedChecklists,
+                    });
+                })
+        }
+    }
+
+    updateCheckItem = (checklistId, checkItemId, checkItemName) => {
+        let { checklists } = this.state;
+        let checklist = checklists.filter(checklist => checklist.id === checklistId)[0].checkItems.map(checkItem => {
+            if (checkItem.id === checkItemId) {
+                checkItem.name = checkItemName;
+            }
+            return checkItem;
+        });
+        let updatedChecklists = checklists.map(checklistthis => {
+            if (checklist.id === checklistId) {
+                checklistthis = checklist
+            }
+            return checklist;
+        })
+        this.setState({
+            checklist: updatedChecklists
+        })
+
     }
 
     render() {
@@ -78,7 +112,7 @@ class CardModal extends Component {
                                 <div className="col-md-9 mr-0 pr-0">
                                     <p className="text-muted">in list <button className="btn">{this.props.listName}</button></p>
                                     <CardDescription />
-                                    {this.state.checklists ? this.state.checklists.map(checklist => <Checklist key={checklist.id} checklist={checklist} />) : null}
+                                    {this.state.checklists ? this.state.checklists.map(checklist => <Checklist key={checklist.id} checklist={checklist} deleteChecklist={this.deleteChecklist} updateCheckItem={this.updateCheckItem} />) : null}
                                     <div className="cardActivities mb-2">
                                         <h6><i className="fas fa-dumbbell text-muted mr-2"></i> Activity</h6>
 
