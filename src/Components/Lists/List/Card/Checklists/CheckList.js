@@ -68,6 +68,33 @@ class CheckList extends React.Component {
         }
     }
 
+    changeCheckedStatus = (checkItemStatus, checkItemId) => {
+        let { checklist } = this.state;
+        if (checkItemStatus === 'incomplete') {
+            checkItemStatus = 'complete';
+        }
+        else {
+            checkItemStatus = "incomplete";
+        }
+
+        let notAllowedToDelete = ['5e65bd8ff425e525aca64631', '5e845a3b779e06357216fd3d', '5e60b76c5b928d283db14923', '5e8876da77268e2656264886'];
+        if (!notAllowedToDelete.includes(checklist.idBoard)) {
+            axios.put(`https://api.trello.com/1/cards/${checklist.idCard}/checkItem/${checkItemId}?state=${checkItemStatus}&key=26ca8095d6e66ddb4574d27071dc67f5&token=13dda1399e9449a68eeeb078e7cd939f289c6e98096c80e76e2a154c0ac4f90b`)
+                .then(response => {
+                    let updatedCheckItems = checklist.checkItems.map((checkItem) => {
+                        if (checkItem.id === checkItemId) {
+                            checkItem.state = checkItemStatus;
+                        }
+                        return checkItem;
+                    });
+                    checklist.checkItems = updatedCheckItems;
+                    this.setState({
+                        checklist,
+                    });
+                })
+        }
+    }
+
     render() {
         let { checklist } = this.props;
         return (
@@ -85,7 +112,7 @@ class CheckList extends React.Component {
                     <button type="submit" className="form-control-sm btn btn-success mt-2">Save</button>
                 </form>
                 <ul className="pt-2 pb-2">
-                    {checklist.checkItems ? checklist.checkItems.map(checkItem => <CheckItem key={checkItem.id} checkItem={checkItem} deleteCheckItem={this.deleteCheckItem} editCheckItemName={this.editCheckItemName} />) : null}
+                    {checklist.checkItems ? checklist.checkItems.map(checkItem => <CheckItem key={checkItem.id} checkItem={checkItem} deleteCheckItem={this.deleteCheckItem} editCheckItemName={this.editCheckItemName} changeCheckedStatus={() => this.changeCheckedStatus(checkItem.state, checkItem.id)} status={checkItem.state === 'complete' ? true : false} />) : null}
                     {this.state.showAddCheckItem ? <AddCheckItem addCheckItem={this.addCheckItem} /> : null}
                     <li className="d-flex align-items-center p-4" onClick={this.showAddCheckItem}><button className="bg-dark p-1 pl-2 pr-2 btn text-white rounded-lg addChecklistItembtn">Add an item</button></li>
                 </ul>

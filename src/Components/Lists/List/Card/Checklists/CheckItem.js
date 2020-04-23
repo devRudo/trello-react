@@ -5,6 +5,7 @@ class CheckItem extends React.Component {
         super(props);
         this.state = {
             showEditCheckItem: false,
+            isChecked: props.status,
             checkItemName: ''
         }
     }
@@ -29,12 +30,20 @@ class CheckItem extends React.Component {
         });
     }
 
+    changeCheckedStatus = (e) => {
+        this.setState({
+            isChecked: e.target.checked
+        });
+        this.props.changeCheckedStatus(this.state.isChecked);
+    }
+
     render() {
         let { checkItem } = this.props;
+        let isChecked = this.state.isChecked;
         return (
             <li className="d-flex justify-content-between align-items-center">
                 <div className="d-flex justify-content-start align-content-center">
-                    <input type="checkbox" className="form-control-sm mr-4 updateCheckItemStatus" />
+                    <input type="checkbox" onChange={(e) => this.changeCheckedStatus(e)} className="form-control-sm mr-4 updateCheckItemStatus" checked={isChecked} />
                     <div className="d-flex flex-column">
                         {this.state.showEditCheckItem ?
                             <form className="position-relative updateCheckItemNameForm" onSubmit={e => this.handleSubmit(e)}>
